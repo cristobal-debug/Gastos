@@ -17,7 +17,7 @@
 }
 html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
 
-/* ── LOGIN ── */
+/* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity 0.4s}
 .login-box{width:300px;text-align:center}
 .login-logo{font-size:10px;font-weight:600;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-bottom:2.5rem}
@@ -35,7 +35,7 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
 .pin-error{font-size:12px;color:var(--accent);height:16px;margin-top:0.3rem;opacity:0;transition:opacity 0.2s}
 .pin-error.show{opacity:1}
 
-/* ── APP ── */
+/* APP */
 #app{display:none;min-height:100vh}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:10}
 .topbar-brand{font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase}
@@ -51,7 +51,6 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
 
 .main{max-width:1150px;margin:0 auto;padding:1.6rem 1.5rem 3rem}
 
-/* METRICS */
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin-bottom:1.1rem}
 .metric{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem;position:relative;overflow:hidden}
 .metric::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:2px 2px 0 0}
@@ -66,14 +65,12 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
 .metric.blue .metric-value{color:var(--blue)}
 .metric.gold .metric-value{color:var(--gold)}
 
-/* CHARTS */
 .charts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.1rem}
 @media(max-width:640px){.charts{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem}
 .card-title{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
 .chart-wrap{position:relative;height:195px}
 
-/* FILTERS */
 .filters{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:0.85rem 1.2rem;margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .filters input,.filters select{font-size:13px;padding:7px 11px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text);outline:none;font-family:inherit}
 .filters input{flex:1;min-width:160px}
@@ -82,7 +79,6 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
 .filters select option{background:var(--surface2)}
 .count-tag{font-family:monospace;font-size:11px;background:var(--accent-dim);color:var(--accent);border:1px solid rgba(224,92,58,0.18);border-radius:20px;padding:4px 12px;margin-left:auto;white-space:nowrap}
 
-/* TABLE */
 .table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .table-scroll{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px}
@@ -95,10 +91,9 @@ tr:hover td{background:rgba(255,255,255,0.018)}
 .d-cell{max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .i-cell{font-family:monospace;font-size:13px;font-weight:500;color:var(--accent);text-align:right;white-space:nowrap}
 .s-cell{font-family:monospace;font-size:11px;text-align:right;white-space:nowrap}
-.prov{display:inline-block;font-size:10px;font-weight:600;letter-spacing:0.04em;background:var(--blue-dim);color:var(--blue);border:1px solid rgba(74,143,232,0.18);border-radius:4px;padding:2px 7px;text-transform:uppercase;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prov{display:inline-block;font-size:10px;font-weight:600;background:var(--blue-dim);color:var(--blue);border:1px solid rgba(74,143,232,0.18);border-radius:4px;padding:2px 7px;text-transform:uppercase;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .empty{text-align:center;padding:3rem;color:var(--muted);font-style:italic}
 
-/* PAGINATION */
 .pagination{display:flex;align-items:center;justify-content:center;gap:6px;padding:0.9rem;border-top:1px solid var(--border)}
 .pg-btn{font-family:monospace;font-size:12px;padding:5px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);color:var(--muted);cursor:pointer;transition:all 0.15s}
 .pg-btn:hover{color:var(--text);border-color:var(--border2)}
@@ -106,16 +101,16 @@ tr:hover td{background:rgba(255,255,255,0.018)}
 .pg-btn:disabled{opacity:0.2;cursor:default}
 .pg-sep{color:var(--muted2);font-size:12px}
 
-/* STATES */
 .loading-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem;gap:14px;color:var(--muted);font-size:13px}
 .spinner{width:26px;height:26px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.75s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.error-state{padding:2.5rem;text-align:center;font-size:13px;color:var(--accent);line-height:1.7}
+.error-box{margin:0 0 1rem;background:rgba(224,92,58,0.08);border:1px solid rgba(224,92,58,0.3);border-radius:10px;padding:1.2rem 1.4rem;font-size:13px;color:var(--accent);line-height:1.6}
+.error-box pre{font-size:11px;color:var(--muted);background:var(--surface2);padding:10px;border-radius:6px;margin-top:8px;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
 </style>
 </head>
 <body>
 
-<!-- ── LOGIN ── -->
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">Panel Financiero</div>
@@ -140,11 +135,11 @@ tr:hover td{background:rgba(255,255,255,0.018)}
       <button class="pin-btn" onclick="pinPress(0)">0</button>
       <button class="pin-btn del" onclick="pinBack()">⌫</button>
     </div>
-    <div class="pin-error" id="pin-error">PIN incorrecto. Intenta de nuevo.</div>
+    <div class="pin-error" id="pin-error">PIN incorrecto</div>
   </div>
 </div>
 
-<!-- ── APP ── -->
+<!-- APP -->
 <div id="app">
   <div class="topbar">
     <div class="topbar-brand">Panel Financiero · 2026</div>
@@ -158,6 +153,7 @@ tr:hover td{background:rgba(255,255,255,0.018)}
     </div>
   </div>
   <div class="main">
+    <div id="error-area"></div>
     <div class="metrics" id="metrics"></div>
     <div class="charts">
       <div class="card"><div class="card-title">Gastos por mes</div><div class="chart-wrap"><canvas id="chartMes"></canvas></div></div>
@@ -191,91 +187,108 @@ tr:hover td{background:rgba(255,255,255,0.018)}
 </div>
 
 <script>
-// ──────────────────────────────────────────
-// CONFIGURACIÓN — cambiá solo estos valores
-// ──────────────────────────────────────────
-const CONFIG = {
-  PIN:        '021111',
-  SHEET_ID:   '1ZpsF94DV7T5c-I1OSwqhwtciyomII6_J7t9kyuOi2EY',
-  SHEET_NAME: '2026 MOVIMIENTOS',
-  PER_PAGE:   30,
-};
-// ──────────────────────────────────────────
+// ── CONFIG — solo cambiá estos valores ──
+const SHEET_ID   = '1ZpsF94DV7T5c-I1OSwqhwtciyomII6_J7t9kyuOi2EY';
+const SHEET_NAME = '2026 MOVIMIENTOS';
+const PIN        = '021111';
+const PER_PAGE   = 30;
 
-const CSV_URL = () =>
-  `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/export?format=csv&sheet=${encodeURIComponent(CONFIG.SHEET_NAME)}&t=${Date.now()}`;
+// URL del CSV público de Google Sheets
+const csvURL = () =>
+  `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}&t=${Date.now()}`;
+
+// ── HELPERS ──
+const g    = id => document.getElementById(id);
+const fmt  = n  => n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const fmtK = n  => Math.abs(n).toLocaleString('es-ES',{maximumFractionDigits:0})+' €';
+const MESES= ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const MESC = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
 // ── PIN ──
 let pinVal = '';
-function pinPress(d) { if(pinVal.length>=6) return; pinVal+=d; updateDots(); if(pinVal.length===6) setTimeout(checkPin,150); }
-function pinBack()   { pinVal=pinVal.slice(0,-1); updateDots(); }
-function pinClear()  { pinVal=''; updateDots(); }
-function updateDots(){ for(let i=0;i<6;i++) el('d'+i).className='pin-dot'+(i<pinVal.length?' filled':''); }
-function checkPin() {
-  if (pinVal === CONFIG.PIN) {
-    const ls = el('login-screen');
+function pinPress(d){ if(pinVal.length>=6) return; pinVal+=d; updateDots(); if(pinVal.length===6) setTimeout(checkPin,150); }
+function pinBack()  { pinVal=pinVal.slice(0,-1); updateDots(); }
+function pinClear() { pinVal=''; updateDots(); }
+function updateDots(){ for(let i=0;i<6;i++) g('d'+i).className='pin-dot'+(i<pinVal.length?' filled':''); }
+function checkPin(){
+  if(pinVal===PIN){
+    const ls=g('login-screen');
     ls.style.opacity='0';
-    setTimeout(()=>{ ls.style.display='none'; el('app').style.display='block'; loadData(); }, 380);
+    setTimeout(()=>{ ls.style.display='none'; g('app').style.display='block'; loadData(); },380);
   } else {
-    el('pin-error').classList.add('show');
-    for(let i=0;i<6;i++) el('d'+i).className='pin-dot error';
-    setTimeout(()=>{ pinVal=''; updateDots(); el('pin-error').classList.remove('show'); }, 900);
+    g('pin-error').classList.add('show');
+    for(let i=0;i<6;i++) g('d'+i).className='pin-dot error';
+    setTimeout(()=>{ pinVal=''; updateDots(); g('pin-error').classList.remove('show'); },900);
   }
 }
 function logout(){ location.reload(); }
-document.addEventListener('keydown', e => {
-  if(el('login-screen').style.display==='none') return;
+document.addEventListener('keydown',e=>{
+  if(g('login-screen').style.display==='none') return;
   if(e.key>='0'&&e.key<='9') pinPress(Number(e.key));
   else if(e.key==='Backspace') pinBack();
   else if(e.key==='Escape') pinClear();
 });
 
-// ── HELPERS ──
-const el    = id => document.getElementById(id);
-const fmt   = n  => n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
-const fmtK  = n  => Math.abs(n).toLocaleString('es-ES',{maximumFractionDigits:0})+' €';
-const MESES = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-const MESC  = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-
 // ── CSV PARSER ──
 function splitCSV(line){
   const r=[];let c='',q=false;
-  for(const ch of line){ if(ch==='"'){q=!q;}else if(ch===','&&!q){r.push(c);c='';}else c+=ch; }
-  r.push(c); return r;
+  for(const ch of line){
+    if(ch==='"'){q=!q;}
+    else if(ch===','&&!q){r.push(c);c='';}
+    else c+=ch;
+  }
+  r.push(c);
+  return r;
 }
+
 function parseDate(raw){
   raw=(raw||'').replace(/"/g,'').trim();
-  if(!raw) return '';
-  if(raw.includes('/')) { const p=raw.split('/'); return `${p[2]||''}-${(p[1]||'').padStart(2,'0')}-${(p[0]||'').padStart(2,'0')}`; }
-  return raw.slice(0,10);
-}
-function parseCSV(text){
-  const lines=text.split('\n');
-  if(lines.length<2) return [];
-  const header=splitCSV(lines[0]).map(h=>h.trim().replace(/^"|"$/g,''));
-  const i={
-    fecha:   header.findIndex(h=>h==='F. Operativa'||h.includes('Operativa')),
-    desc:    header.findIndex(h=>h==='Q'),
-    importe: header.findIndex(h=>h==='Importe'),
-    saldo:   header.findIndex(h=>h==='Saldo'),
-    prov:    header.findIndex(h=>h==='PROVEEDOR'),
-  };
-  const rows=[];
-  for(let n=1;n<lines.length;n++){
-    const line=lines[n].trim(); if(!line) continue;
-    const cols=splitCSV(line);
-    const imp=parseFloat((cols[i.importe]||'').replace(/"/g,'').replace(',','.'));
-    if(isNaN(imp)||imp>=0) continue;
-    const sal=parseFloat((cols[i.saldo]||'').replace(/"/g,'').replace(',','.'));
-    rows.push({
-      fecha:       parseDate(cols[i.fecha]),
-      descripcion: (cols[i.desc]||'').replace(/"/g,'').trim(),
-      importe:     imp,
-      saldo:       isNaN(sal)?0:sal,
-      proveedor:   (cols[i.prov]||'').replace(/"/g,'').trim(),
-    });
+  if(!raw||raw==='F. Operativa') return '';
+  // formato DD/MM/YYYY
+  if(/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(raw)){
+    const[d,m,y]=raw.split('/');
+    return `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
   }
-  return rows.filter(r=>r.fecha.length===10);
+  // formato YYYY-MM-DD o similar
+  if(raw.length>=10) return raw.slice(0,10);
+  return '';
+}
+
+function parseCSV(text){
+  const lines = text.trim().split('\n');
+  if(lines.length<2) return [];
+
+  const header = splitCSV(lines[0]).map(h=>h.replace(/"/g,'').trim());
+  const idx = {
+    fecha:     header.findIndex(h=>h==='F. Operativa'),
+    desc:      header.findIndex(h=>h==='Q'),
+    importe:   header.findIndex(h=>h==='Importe'),
+    saldo:     header.findIndex(h=>h==='Saldo'),
+    proveedor: header.findIndex(h=>h==='PROVEEDOR'),
+  };
+
+  if(idx.importe===-1) throw new Error('Columna "Importe" no encontrada.\nCabeceras: '+header.join(', '));
+
+  const gastos=[];
+  for(let i=1;i<lines.length;i++){
+    const line=lines[i].trim();
+    if(!line) continue;
+    const cols=splitCSV(line);
+    const raw = (cols[idx.importe]||'').replace(/"/g,'').replace(',','.').trim();
+    const importe=parseFloat(raw);
+    if(isNaN(importe)||importe>=0) continue;
+
+    const fecha=parseDate(cols[idx.fecha]);
+    if(!fecha) continue;
+
+    const rawSaldo=(cols[idx.saldo]||'').replace(/"/g,'').replace(',','.').trim();
+    const saldo=parseFloat(rawSaldo)||0;
+    const proveedor=(cols[idx.proveedor]||'').replace(/"/g,'').trim();
+    const desc=(cols[idx.desc]||'').replace(/"/g,'').trim();
+
+    gastos.push({fecha,descripcion:desc,importe,saldo,proveedor});
+  }
+  return gastos;
 }
 
 // ── DATA ──
@@ -283,41 +296,43 @@ let allData=[], filtered=[], page=1, chartMes=null, chartProv=null;
 
 async function loadData(){
   setSyncing(true);
-  el('tbody').innerHTML='<tr><td colspan="5"><div class="loading-state"><div class="spinner"></div><span>Conectando con Google Sheets…</span></div></td></tr>';
-  el('pagination').innerHTML='';
+  g('error-area').innerHTML='';
+  g('tbody').innerHTML='<tr><td colspan="5"><div class="loading-state"><div class="spinner"></div><span>Conectando con Google Sheets…</span></div></td></tr>';
+  g('pagination').innerHTML='';
+
   try {
-    const res=await fetch(CSV_URL());
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const text=await res.text();
-    allData=parseCSV(text);
-    if(!allData.length) throw new Error('No se encontraron movimientos negativos en la hoja.');
+    const res = await fetch(csvURL());
+    if(!res.ok) throw new Error(`HTTP ${res.status} — verifica que el Sheet es público`);
+    const text = await res.text();
+
+    // Detectar si Google devolvió HTML de error en lugar del CSV
+    if(text.trim().startsWith('<')) throw new Error('El Sheet no está configurado como público, o el nombre de la hoja es incorrecto.');
+
+    allData = parseCSV(text);
+    if(!allData.length) throw new Error('No se encontraron movimientos negativos en la hoja "'+SHEET_NAME+'"');
+
     populateMeses();
     applyFilters();
     renderCharts();
-    const now=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
-    el('last-sync').textContent='Actualizado '+now;
+    g('last-sync').textContent='Actualizado '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
     setSyncing(false,'Actualizado ✓');
     setTimeout(()=>setSyncing(false),2500);
+
   } catch(e){
     setSyncing(false,'Reintentar');
-    el('tbody').innerHTML=`<tr><td colspan="5"><div class="error-state">
-      No se pudo cargar el Sheet<br>
-      <small style="color:var(--muted);font-size:11px">${e.message}</small><br><br>
-      <button class="sync-btn" style="display:inline-flex;margin:0 auto" onclick="loadData()">
-        <div class="sync-dot"></div>&nbsp;Reintentar
-      </button>
-    </div></td></tr>`;
+    g('error-area').innerHTML=`<div class="error-box"><strong>Error al cargar el Sheet</strong><pre>${e.message}</pre></div>`;
+    g('tbody').innerHTML='';
   }
 }
 
 function setSyncing(on,label='Actualizar'){
-  el('sync-dot').className='sync-dot'+(on?' spin':'');
-  el('sync-label').textContent=on?'Cargando…':label;
+  g('sync-dot').className='sync-dot'+(on?' spin':'');
+  g('sync-label').textContent=on?'Cargando…':label;
 }
 
 function populateMeses(){
   const set=[...new Set(allData.map(r=>r.fecha.slice(0,7)))].sort();
-  const sel=el('mesSelect'), prev=sel.value;
+  const sel=g('mesSelect'),prev=sel.value;
   sel.innerHTML='<option value="">Todos los meses</option>';
   set.forEach(m=>{ const[y,mo]=m.split('-'); sel.innerHTML+=`<option value="${m}">${MESES[+mo]||mo} ${y}</option>`; });
   if(prev) sel.value=prev;
@@ -325,14 +340,14 @@ function populateMeses(){
 
 // ── FILTERS ──
 function applyFilters(){
-  const q=el('searchInput').value.toLowerCase();
-  const mes=el('mesSelect').value;
-  const srt=el('sortSelect').value;
+  const q=g('searchInput').value.toLowerCase();
+  const mes=g('mesSelect').value;
+  const srt=g('sortSelect').value;
   filtered=allData.filter(r=>
     (!q||r.descripcion.toLowerCase().includes(q)||r.proveedor.toLowerCase().includes(q))&&
     (!mes||r.fecha.startsWith(mes))
   );
-  if(srt==='fecha-desc')  filtered.sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  if(srt==='fecha-desc')       filtered.sort((a,b)=>b.fecha.localeCompare(a.fecha));
   else if(srt==='fecha-asc')   filtered.sort((a,b)=>a.fecha.localeCompare(b.fecha));
   else if(srt==='importe-asc') filtered.sort((a,b)=>a.importe-b.importe);
   else                         filtered.sort((a,b)=>b.importe-a.importe);
@@ -340,7 +355,7 @@ function applyFilters(){
   renderMetrics();
   renderTable();
   renderPagination();
-  el('countTag').textContent=filtered.length+' registros';
+  g('countTag').textContent=filtered.length+' registros';
 }
 
 // ── METRICS ──
@@ -350,14 +365,14 @@ function renderMetrics(){
   filtered.forEach(r=>{ const m=r.fecha.slice(0,7); byMes[m]=(byMes[m]||0)+r.importe; });
   const mKeys=Object.keys(byMes).sort();
   const max=filtered.length?filtered.reduce((a,b)=>b.importe<a.importe?b:a):{importe:0};
-  const cols=['blue','green','gold','blue','green','gold'];
+  const cols=['blue','green','gold','blue','green'];
   let html=`
     <div class="metric red"><div class="metric-label">Total gastos</div><div class="metric-value">${fmt(total)}</div></div>
     <div class="metric"><div class="metric-label">Movimientos</div><div class="metric-value">${filtered.length}</div></div>
     <div class="metric gold"><div class="metric-label">Mayor gasto</div><div class="metric-value" style="font-size:1rem">${fmt(max.importe)}</div></div>
   `;
   mKeys.forEach((m,i)=>{ const[y,mo]=m.split('-'); html+=`<div class="metric ${cols[i]}"><div class="metric-label">${MESC[+mo]||mo} ${y}</div><div class="metric-value">${fmt(byMes[m])}</div></div>`; });
-  el('metrics').innerHTML=html;
+  g('metrics').innerHTML=html;
 }
 
 // ── CHARTS ──
@@ -366,7 +381,7 @@ function renderCharts(){
   allData.forEach(r=>{ const m=r.fecha.slice(0,7); mesTot[m]=(mesTot[m]||0)+Math.abs(r.importe); });
   const mKeys=Object.keys(mesTot).sort();
   if(chartMes) chartMes.destroy();
-  chartMes=new Chart(el('chartMes'),{
+  chartMes=new Chart(g('chartMes'),{
     type:'bar',
     data:{labels:mKeys.map(m=>{const[,mo]=m.split('-');return MESC[+mo]||mo}),datasets:[{data:mKeys.map(m=>mesTot[m]),backgroundColor:'rgba(224,92,58,0.65)',hoverBackgroundColor:'#e05c3a',borderRadius:6,borderSkipped:false}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:'#6b7394',font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(38,44,61,0.9)'}},x:{ticks:{color:'#6b7394',font:{size:12}},grid:{display:false}}}}
@@ -375,7 +390,7 @@ function renderCharts(){
   allData.forEach(r=>{ const p=(r.proveedor||'').trim().toUpperCase(); if(p) provT[p]=(provT[p]||0)+Math.abs(r.importe); });
   const top=Object.entries(provT).sort((a,b)=>b[1]-a[1]).slice(0,8);
   if(chartProv) chartProv.destroy();
-  chartProv=new Chart(el('chartProv'),{
+  chartProv=new Chart(g('chartProv'),{
     type:'bar',
     data:{labels:top.map(e=>e[0]),datasets:[{data:top.map(e=>e[1]),backgroundColor:'rgba(74,143,232,0.65)',hoverBackgroundColor:'#4a8fe8',borderRadius:4,borderSkipped:false}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b7394',font:{size:10},callback:v=>fmtK(v)},grid:{color:'rgba(38,44,61,0.9)'}},y:{ticks:{color:'#a0a8c0',font:{size:11}},grid:{display:false}}}}
@@ -384,9 +399,9 @@ function renderCharts(){
 
 // ── TABLE ──
 function renderTable(){
-  const slice=filtered.slice((page-1)*CONFIG.PER_PAGE,page*CONFIG.PER_PAGE);
-  if(!slice.length){el('tbody').innerHTML='<tr><td colspan="5" class="empty">Sin resultados</td></tr>';return;}
-  el('tbody').innerHTML=slice.map(r=>`
+  const slice=filtered.slice((page-1)*PER_PAGE,page*PER_PAGE);
+  if(!slice.length){g('tbody').innerHTML='<tr><td colspan="5" class="empty">Sin resultados</td></tr>';return;}
+  g('tbody').innerHTML=slice.map(r=>`
     <tr>
       <td class="f-cell">${r.fecha}</td>
       <td class="d-cell" title="${r.descripcion}">${r.descripcion}</td>
@@ -398,26 +413,25 @@ function renderTable(){
 
 // ── PAGINATION ──
 function renderPagination(){
-  const total=Math.ceil(filtered.length/CONFIG.PER_PAGE);
-  if(total<=1){el('pagination').innerHTML='';return;}
+  const total=Math.ceil(filtered.length/PER_PAGE);
+  if(total<=1){g('pagination').innerHTML='';return;}
   let html=`<button class="pg-btn" onclick="goPage(${page-1})" ${page===1?'disabled':''}>← Ant</button>`;
   const range=[...new Set([1,total,page,page-1,page+1].filter(p=>p>=1&&p<=total))].sort((a,b)=>a-b);
   let prev=null;
   range.forEach(p=>{ if(prev&&p-prev>1) html+='<span class="pg-sep">…</span>'; html+=`<button class="pg-btn${p===page?' active':''}" onclick="goPage(${p})">${p}</button>`; prev=p; });
   html+=`<button class="pg-btn" onclick="goPage(${page+1})" ${page===total?'disabled':''}>Sig →</button>`;
-  el('pagination').innerHTML=html;
+  g('pagination').innerHTML=html;
 }
 function goPage(p){
-  const t=Math.ceil(filtered.length/CONFIG.PER_PAGE);
+  const t=Math.ceil(filtered.length/PER_PAGE);
   if(p<1||p>t) return;
   page=p; renderTable(); renderPagination();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ── EVENTS ──
-el('searchInput').addEventListener('input',applyFilters);
-el('mesSelect').addEventListener('change',applyFilters);
-el('sortSelect').addEventListener('change',applyFilters);
+g('searchInput').addEventListener('input',applyFilters);
+g('mesSelect').addEventListener('change',applyFilters);
+g('sortSelect').addEventListener('change',applyFilters);
 </script>
 </body>
 </html>
