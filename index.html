@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gastos 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f12;--surface:#141720;--surface2:#1c2030;
+  --border:#262c3d;--border2:#323a52;
+  --text:#e8eaf0;--muted:#6b7394;--muted2:#4a5270;
+  --accent:#e05c3a;--accent-dim:rgba(224,92,58,0.12);
+  --green:#2ecc8a;--blue:#4a8fe8;--blue-dim:rgba(74,143,232,0.10);
+  --gold:#d4a843;
+}
+html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+
+/* ── LOGIN ── */
+#login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity 0.4s}
+.login-box{width:300px;text-align:center}
+.login-logo{font-size:10px;font-weight:600;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-bottom:2.5rem}
+.login-title{font-size:1.55rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;letter-spacing:-0.02em}
+.login-sub{font-size:12px;color:var(--muted);margin-bottom:2.2rem}
+.pin-dots{display:flex;justify-content:center;gap:12px;margin-bottom:1.6rem}
+.pin-dot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--border2);background:transparent;transition:all 0.2s}
+.pin-dot.filled{background:var(--accent);border-color:var(--accent);box-shadow:0 0 10px rgba(224,92,58,0.35)}
+.pin-dot.error{background:rgba(224,92,58,0.3);border-color:var(--accent)}
+.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:210px;margin:0 auto 1rem}
+.pin-btn{height:54px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:1.15rem;font-weight:500;cursor:pointer;transition:all 0.15s}
+.pin-btn:hover{background:var(--surface2);border-color:var(--border2)}
+.pin-btn:active{transform:scale(0.94)}
+.pin-btn.del{font-size:0.9rem;color:var(--muted)}
+.pin-error{font-size:12px;color:var(--accent);height:16px;margin-top:0.3rem;opacity:0;transition:opacity 0.2s}
+.pin-error.show{opacity:1}
+
+/* ── APP ── */
+#app{display:none;min-height:100vh}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:10}
+.topbar-brand{font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.sync-btn{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 12px;cursor:pointer;transition:all 0.2s;user-select:none}
+.sync-btn:hover{color:var(--text);border-color:var(--border2)}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+.sync-dot.spin{animation:blink 0.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.15}}
+.logout-btn{font-size:12px;color:var(--muted2);cursor:pointer;padding:6px 10px;border-radius:6px;transition:color 0.2s}
+.logout-btn:hover{color:var(--muted)}
+.last-sync{font-size:11px;color:var(--muted2)}
+
+.main{max-width:1150px;margin:0 auto;padding:1.6rem 1.5rem 3rem}
+
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin-bottom:1.1rem}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem;position:relative;overflow:hidden}
+.metric::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:2px 2px 0 0}
+.metric.red::before{background:var(--accent)}
+.metric.green::before{background:var(--green)}
+.metric.blue::before{background:var(--blue)}
+.metric.gold::before{background:var(--gold)}
+.metric-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.metric-value{font-family:monospace;font-size:1.3rem;font-weight:500;letter-spacing:-0.01em}
+.metric.red .metric-value{color:var(--accent)}
+.metric.green .metric-value{color:var(--green)}
+.metric.blue .metric-value{color:var(--blue)}
+.metric.gold .metric-value{color:var(--gold)}
+
+/* CHARTS */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.1rem}
+@media(max-width:640px){.charts{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem}
+.card-title{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.chart-wrap{position:relative;height:195px}
+
+/* FILTERS */
+.filters{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:0.85rem 1.2rem;margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filters input,.filters select{font-size:13px;padding:7px 11px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text);outline:none;font-family:inherit}
+.filters input{flex:1;min-width:160px}
+.filters input::placeholder{color:var(--muted2)}
+.filters input:focus,.filters select:focus{border-color:var(--border2)}
+.filters select option{background:var(--surface2)}
+.count-tag{font-family:monospace;font-size:11px;background:var(--accent-dim);color:var(--accent);border:1px solid rgba(224,92,58,0.18);border-radius:20px;padding:4px 12px;margin-left:auto;white-space:nowrap}
+
+/* TABLE */
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:var(--surface2);border-bottom:1px solid var(--border)}
+th{padding:9px 14px;text-align:left;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+td{padding:8px 14px;border-bottom:1px solid rgba(38,44,61,0.5);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.018)}
+.f-cell{font-family:monospace;font-size:11px;color:var(--muted);white-space:nowrap}
+.d-cell{max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.i-cell{font-family:monospace;font-size:13px;font-weight:500;color:var(--accent);text-align:right;white-space:nowrap}
+.s-cell{font-family:monospace;font-size:11px;text-align:right;white-space:nowrap}
+.prov{display:inline-block;font-size:10px;font-weight:600;letter-spacing:0.04em;background:var(--blue-dim);color:var(--blue);border:1px solid rgba(74,143,232,0.18);border-radius:4px;padding:2px 7px;text-transform:uppercase;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.empty{text-align:center;padding:3rem;color:var(--muted);font-style:italic}
+
+/* PAGINATION */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;padding:0.9rem;border-top:1px solid var(--border)}
+.pg-btn{font-family:monospace;font-size:12px;padding:5px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface2);color:var(--muted);cursor:pointer;transition:all 0.15s}
+.pg-btn:hover{color:var(--text);border-color:var(--border2)}
+.pg-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pg-btn:disabled{opacity:0.2;cursor:default}
+.pg-sep{color:var(--muted2);font-size:12px}
+
+/* STATES */
+.loading-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem;gap:14px;color:var(--muted);font-size:13px}
+.spinner{width:26px;height:26px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.75s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.error-state{padding:2.5rem;text-align:center;font-size:13px;color:var(--accent);line-height:1.7}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Panel Financiero</div>
+    <div class="login-title">Gastos 2026</div>
+    <div class="login-sub">Introduce tu PIN para acceder</div>
+    <div class="pin-dots" id="pin-dots">
+      <div class="pin-dot" id="d0"></div><div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div><div class="pin-dot" id="d3"></div>
+      <div class="pin-dot" id="d4"></div><div class="pin-dot" id="d5"></div>
+    </div>
+    <div class="pin-grid">
+      <button class="pin-btn" onclick="pinPress(1)">1</button>
+      <button class="pin-btn" onclick="pinPress(2)">2</button>
+      <button class="pin-btn" onclick="pinPress(3)">3</button>
+      <button class="pin-btn" onclick="pinPress(4)">4</button>
+      <button class="pin-btn" onclick="pinPress(5)">5</button>
+      <button class="pin-btn" onclick="pinPress(6)">6</button>
+      <button class="pin-btn" onclick="pinPress(7)">7</button>
+      <button class="pin-btn" onclick="pinPress(8)">8</button>
+      <button class="pin-btn" onclick="pinPress(9)">9</button>
+      <button class="pin-btn del" onclick="pinClear()">✕</button>
+      <button class="pin-btn" onclick="pinPress(0)">0</button>
+      <button class="pin-btn del" onclick="pinBack()">⌫</button>
+    </div>
+    <div class="pin-error" id="pin-error">PIN incorrecto. Intenta de nuevo.</div>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-brand">Panel Financiero · 2026</div>
+    <div class="topbar-right">
+      <span class="last-sync" id="last-sync"></span>
+      <div class="sync-btn" onclick="loadData()">
+        <div class="sync-dot" id="sync-dot"></div>
+        <span id="sync-label">Actualizar</span>
+      </div>
+      <div class="logout-btn" onclick="logout()">Salir</div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="metrics" id="metrics"></div>
+    <div class="charts">
+      <div class="card"><div class="card-title">Gastos por mes</div><div class="chart-wrap"><canvas id="chartMes"></canvas></div></div>
+      <div class="card"><div class="card-title">Top proveedores</div><div class="chart-wrap"><canvas id="chartProv"></canvas></div></div>
+    </div>
+    <div class="filters">
+      <input type="text" id="searchInput" placeholder="Buscar descripción o proveedor…">
+      <select id="mesSelect"><option value="">Todos los meses</option></select>
+      <select id="sortSelect">
+        <option value="fecha-desc">Fecha ↓ más reciente</option>
+        <option value="fecha-asc">Fecha ↑ más antigua</option>
+        <option value="importe-asc">Mayor gasto primero</option>
+        <option value="importe-desc">Menor gasto primero</option>
+      </select>
+      <span class="count-tag" id="countTag">— registros</span>
+    </div>
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th>Fecha</th><th>Descripción</th><th>Proveedor</th>
+            <th style="text-align:right">Importe</th>
+            <th style="text-align:right">Saldo</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────
+// CONFIGURACIÓN — cambiá solo estos valores
+// ──────────────────────────────────────────
+const CONFIG = {
+  PIN:        '021111',
+  SHEET_ID:   '1ZpsF94DV7T5c-I1OSwqhwtciyomII6_J7t9kyuOi2EY',
+  SHEET_NAME: '2026 MOVIMIENTOS',
+  PER_PAGE:   30,
+};
+// ──────────────────────────────────────────
+
+const CSV_URL = () =>
+  `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/export?format=csv&sheet=${encodeURIComponent(CONFIG.SHEET_NAME)}&t=${Date.now()}`;
+
+// ── PIN ──
+let pinVal = '';
+function pinPress(d) { if(pinVal.length>=6) return; pinVal+=d; updateDots(); if(pinVal.length===6) setTimeout(checkPin,150); }
+function pinBack()   { pinVal=pinVal.slice(0,-1); updateDots(); }
+function pinClear()  { pinVal=''; updateDots(); }
+function updateDots(){ for(let i=0;i<6;i++) el('d'+i).className='pin-dot'+(i<pinVal.length?' filled':''); }
+function checkPin() {
+  if (pinVal === CONFIG.PIN) {
+    const ls = el('login-screen');
+    ls.style.opacity='0';
+    setTimeout(()=>{ ls.style.display='none'; el('app').style.display='block'; loadData(); }, 380);
+  } else {
+    el('pin-error').classList.add('show');
+    for(let i=0;i<6;i++) el('d'+i).className='pin-dot error';
+    setTimeout(()=>{ pinVal=''; updateDots(); el('pin-error').classList.remove('show'); }, 900);
+  }
+}
+function logout(){ location.reload(); }
+document.addEventListener('keydown', e => {
+  if(el('login-screen').style.display==='none') return;
+  if(e.key>='0'&&e.key<='9') pinPress(Number(e.key));
+  else if(e.key==='Backspace') pinBack();
+  else if(e.key==='Escape') pinClear();
+});
+
+// ── HELPERS ──
+const el    = id => document.getElementById(id);
+const fmt   = n  => n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const fmtK  = n  => Math.abs(n).toLocaleString('es-ES',{maximumFractionDigits:0})+' €';
+const MESES = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const MESC  = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+// ── CSV PARSER ──
+function splitCSV(line){
+  const r=[];let c='',q=false;
+  for(const ch of line){ if(ch==='"'){q=!q;}else if(ch===','&&!q){r.push(c);c='';}else c+=ch; }
+  r.push(c); return r;
+}
+function parseDate(raw){
+  raw=(raw||'').replace(/"/g,'').trim();
+  if(!raw) return '';
+  if(raw.includes('/')) { const p=raw.split('/'); return `${p[2]||''}-${(p[1]||'').padStart(2,'0')}-${(p[0]||'').padStart(2,'0')}`; }
+  return raw.slice(0,10);
+}
+function parseCSV(text){
+  const lines=text.split('\n');
+  if(lines.length<2) return [];
+  const header=splitCSV(lines[0]).map(h=>h.trim().replace(/^"|"$/g,''));
+  const i={
+    fecha:   header.findIndex(h=>h==='F. Operativa'||h.includes('Operativa')),
+    desc:    header.findIndex(h=>h==='Q'),
+    importe: header.findIndex(h=>h==='Importe'),
+    saldo:   header.findIndex(h=>h==='Saldo'),
+    prov:    header.findIndex(h=>h==='PROVEEDOR'),
+  };
+  const rows=[];
+  for(let n=1;n<lines.length;n++){
+    const line=lines[n].trim(); if(!line) continue;
+    const cols=splitCSV(line);
+    const imp=parseFloat((cols[i.importe]||'').replace(/"/g,'').replace(',','.'));
+    if(isNaN(imp)||imp>=0) continue;
+    const sal=parseFloat((cols[i.saldo]||'').replace(/"/g,'').replace(',','.'));
+    rows.push({
+      fecha:       parseDate(cols[i.fecha]),
+      descripcion: (cols[i.desc]||'').replace(/"/g,'').trim(),
+      importe:     imp,
+      saldo:       isNaN(sal)?0:sal,
+      proveedor:   (cols[i.prov]||'').replace(/"/g,'').trim(),
+    });
+  }
+  return rows.filter(r=>r.fecha.length===10);
+}
+
+// ── DATA ──
+let allData=[], filtered=[], page=1, chartMes=null, chartProv=null;
+
+async function loadData(){
+  setSyncing(true);
+  el('tbody').innerHTML='<tr><td colspan="5"><div class="loading-state"><div class="spinner"></div><span>Conectando con Google Sheets…</span></div></td></tr>';
+  el('pagination').innerHTML='';
+  try {
+    const res=await fetch(CSV_URL());
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const text=await res.text();
+    allData=parseCSV(text);
+    if(!allData.length) throw new Error('No se encontraron movimientos negativos en la hoja.');
+    populateMeses();
+    applyFilters();
+    renderCharts();
+    const now=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+    el('last-sync').textContent='Actualizado '+now;
+    setSyncing(false,'Actualizado ✓');
+    setTimeout(()=>setSyncing(false),2500);
+  } catch(e){
+    setSyncing(false,'Reintentar');
+    el('tbody').innerHTML=`<tr><td colspan="5"><div class="error-state">
+      No se pudo cargar el Sheet<br>
+      <small style="color:var(--muted);font-size:11px">${e.message}</small><br><br>
+      <button class="sync-btn" style="display:inline-flex;margin:0 auto" onclick="loadData()">
+        <div class="sync-dot"></div>&nbsp;Reintentar
+      </button>
+    </div></td></tr>`;
+  }
+}
+
+function setSyncing(on,label='Actualizar'){
+  el('sync-dot').className='sync-dot'+(on?' spin':'');
+  el('sync-label').textContent=on?'Cargando…':label;
+}
+
+function populateMeses(){
+  const set=[...new Set(allData.map(r=>r.fecha.slice(0,7)))].sort();
+  const sel=el('mesSelect'), prev=sel.value;
+  sel.innerHTML='<option value="">Todos los meses</option>';
+  set.forEach(m=>{ const[y,mo]=m.split('-'); sel.innerHTML+=`<option value="${m}">${MESES[+mo]||mo} ${y}</option>`; });
+  if(prev) sel.value=prev;
+}
+
+// ── FILTERS ──
+function applyFilters(){
+  const q=el('searchInput').value.toLowerCase();
+  const mes=el('mesSelect').value;
+  const srt=el('sortSelect').value;
+  filtered=allData.filter(r=>
+    (!q||r.descripcion.toLowerCase().includes(q)||r.proveedor.toLowerCase().includes(q))&&
+    (!mes||r.fecha.startsWith(mes))
+  );
+  if(srt==='fecha-desc')  filtered.sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  else if(srt==='fecha-asc')   filtered.sort((a,b)=>a.fecha.localeCompare(b.fecha));
+  else if(srt==='importe-asc') filtered.sort((a,b)=>a.importe-b.importe);
+  else                         filtered.sort((a,b)=>b.importe-a.importe);
+  page=1;
+  renderMetrics();
+  renderTable();
+  renderPagination();
+  el('countTag').textContent=filtered.length+' registros';
+}
+
+// ── METRICS ──
+function renderMetrics(){
+  const total=filtered.reduce((s,r)=>s+r.importe,0);
+  const byMes={};
+  filtered.forEach(r=>{ const m=r.fecha.slice(0,7); byMes[m]=(byMes[m]||0)+r.importe; });
+  const mKeys=Object.keys(byMes).sort();
+  const max=filtered.length?filtered.reduce((a,b)=>b.importe<a.importe?b:a):{importe:0};
+  const cols=['blue','green','gold','blue','green','gold'];
+  let html=`
+    <div class="metric red"><div class="metric-label">Total gastos</div><div class="metric-value">${fmt(total)}</div></div>
+    <div class="metric"><div class="metric-label">Movimientos</div><div class="metric-value">${filtered.length}</div></div>
+    <div class="metric gold"><div class="metric-label">Mayor gasto</div><div class="metric-value" style="font-size:1rem">${fmt(max.importe)}</div></div>
+  `;
+  mKeys.forEach((m,i)=>{ const[y,mo]=m.split('-'); html+=`<div class="metric ${cols[i]}"><div class="metric-label">${MESC[+mo]||mo} ${y}</div><div class="metric-value">${fmt(byMes[m])}</div></div>`; });
+  el('metrics').innerHTML=html;
+}
+
+// ── CHARTS ──
+function renderCharts(){
+  const mesTot={};
+  allData.forEach(r=>{ const m=r.fecha.slice(0,7); mesTot[m]=(mesTot[m]||0)+Math.abs(r.importe); });
+  const mKeys=Object.keys(mesTot).sort();
+  if(chartMes) chartMes.destroy();
+  chartMes=new Chart(el('chartMes'),{
+    type:'bar',
+    data:{labels:mKeys.map(m=>{const[,mo]=m.split('-');return MESC[+mo]||mo}),datasets:[{data:mKeys.map(m=>mesTot[m]),backgroundColor:'rgba(224,92,58,0.65)',hoverBackgroundColor:'#e05c3a',borderRadius:6,borderSkipped:false}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:'#6b7394',font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(38,44,61,0.9)'}},x:{ticks:{color:'#6b7394',font:{size:12}},grid:{display:false}}}}
+  });
+  const provT={};
+  allData.forEach(r=>{ const p=(r.proveedor||'').trim().toUpperCase(); if(p) provT[p]=(provT[p]||0)+Math.abs(r.importe); });
+  const top=Object.entries(provT).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  if(chartProv) chartProv.destroy();
+  chartProv=new Chart(el('chartProv'),{
+    type:'bar',
+    data:{labels:top.map(e=>e[0]),datasets:[{data:top.map(e=>e[1]),backgroundColor:'rgba(74,143,232,0.65)',hoverBackgroundColor:'#4a8fe8',borderRadius:4,borderSkipped:false}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b7394',font:{size:10},callback:v=>fmtK(v)},grid:{color:'rgba(38,44,61,0.9)'}},y:{ticks:{color:'#a0a8c0',font:{size:11}},grid:{display:false}}}}
+  });
+}
+
+// ── TABLE ──
+function renderTable(){
+  const slice=filtered.slice((page-1)*CONFIG.PER_PAGE,page*CONFIG.PER_PAGE);
+  if(!slice.length){el('tbody').innerHTML='<tr><td colspan="5" class="empty">Sin resultados</td></tr>';return;}
+  el('tbody').innerHTML=slice.map(r=>`
+    <tr>
+      <td class="f-cell">${r.fecha}</td>
+      <td class="d-cell" title="${r.descripcion}">${r.descripcion}</td>
+      <td>${r.proveedor?`<span class="prov">${r.proveedor}</span>`:'<span style="color:var(--muted2)">—</span>'}</td>
+      <td class="i-cell">${fmt(r.importe)}</td>
+      <td class="s-cell" style="color:${r.saldo<0?'var(--accent)':'var(--muted)'}">${fmt(r.saldo)}</td>
+    </tr>`).join('');
+}
+
+// ── PAGINATION ──
+function renderPagination(){
+  const total=Math.ceil(filtered.length/CONFIG.PER_PAGE);
+  if(total<=1){el('pagination').innerHTML='';return;}
+  let html=`<button class="pg-btn" onclick="goPage(${page-1})" ${page===1?'disabled':''}>← Ant</button>`;
+  const range=[...new Set([1,total,page,page-1,page+1].filter(p=>p>=1&&p<=total))].sort((a,b)=>a-b);
+  let prev=null;
+  range.forEach(p=>{ if(prev&&p-prev>1) html+='<span class="pg-sep">…</span>'; html+=`<button class="pg-btn${p===page?' active':''}" onclick="goPage(${p})">${p}</button>`; prev=p; });
+  html+=`<button class="pg-btn" onclick="goPage(${page+1})" ${page===total?'disabled':''}>Sig →</button>`;
+  el('pagination').innerHTML=html;
+}
+function goPage(p){
+  const t=Math.ceil(filtered.length/CONFIG.PER_PAGE);
+  if(p<1||p>t) return;
+  page=p; renderTable(); renderPagination();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── EVENTS ──
+el('searchInput').addEventListener('input',applyFilters);
+el('mesSelect').addEventListener('change',applyFilters);
+el('sortSelect').addEventListener('change',applyFilters);
+</script>
+</body>
+</html>
